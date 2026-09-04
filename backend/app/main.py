@@ -1,4 +1,4 @@
-from fastapi.middleware.cors import CORSMiddleware
+```python
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
@@ -25,6 +25,8 @@ app = FastAPI(
     description="AI-powered financial risk intelligence system",
     version="1.0.0",
 )
+
+# Allow the deployed frontend to communicate with the API
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -33,14 +35,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 DATA_DIR = Path(__file__).resolve().parents[2] / "data"
 
@@ -257,6 +251,7 @@ def investigate_cluster(cluster_id: str, split: str = "dev"):
             detail=f"Investigation failed: {exc}",
         ) from exc
 
+
 @app.get("/clusters")
 def get_clusters(split: str = "dev"):
     split = split.lower()
@@ -318,3 +313,4 @@ def get_clusters(split: str = "dev"):
             status_code=500,
             detail=f"Cluster retrieval failed: {exc}",
         ) from exc
+    
