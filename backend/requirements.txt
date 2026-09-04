@@ -1,0 +1,2 @@
+# M2 data generation uses only the Python standard library.
+networkx>=3.3,<4
